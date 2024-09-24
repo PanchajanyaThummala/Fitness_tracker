@@ -30,10 +30,13 @@ def create_table():
         ''')
     conn.close()
 
-# Function to load existing data
-def load_data():
+# Function to load existing data, optionally filtered by date
+def load_data(selected_date=None):
     conn = create_connection()
-    data = pd.read_sql_query("SELECT * FROM exercises", conn)
+    if selected_date:
+        data = pd.read_sql_query("SELECT * FROM exercises WHERE date = ?", conn, params=(selected_date,))
+    else:
+        data = pd.read_sql_query("SELECT * FROM exercises", conn)
     conn.close()
     return data
 
@@ -135,10 +138,11 @@ if st.sidebar.button("Clear All Entries"):
 
 # Display logged exercises
 st.subheader("📊 Logged Exercises")
-data = load_data()
+selected_date = st.sidebar.date_input("Filter by Date", datetime.today())
+data = load_data(selected_date.strftime("%Y-%m-%d"))  # Format date for SQL query
 if not data.empty:
     st.dataframe(data, use_container_width=True)  # Display the DataFrame without index
 else:
-    st.write("No entries found. Please log your exercises.")
+    st.write("No entries found for the selected date. Please log your exercises.")
 
 # Optional: Add charts or statistics here
