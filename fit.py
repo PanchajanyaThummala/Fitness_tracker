@@ -140,8 +140,12 @@ if st.sidebar.button("Clear All Entries"):
 st.subheader("📊 Logged Exercises")
 selected_date = st.sidebar.date_input("Filter by Date", datetime.today())
 data = load_data(selected_date.strftime("%Y-%m-%d"))  # Format date for SQL query
+
+# Add S.No column that resets for each date
 if not data.empty:
-    st.dataframe(data, use_container_width=True)  # Display the DataFrame without index
+    data['S.No'] = data.groupby('date').cumcount() + 1  # Create S.No column
+    data = data[['S.No', 'date', 'exercise', 'set1_weight', 'set1_reps', 'set2_weight', 'set2_reps', 'set3_weight', 'set3_reps']]  # Reorder columns
+    st.dataframe(data, use_container_width=True)  # Display the DataFrame
 else:
     st.write("No entries found for the selected date. Please log your exercises.")
 
