@@ -147,8 +147,7 @@ if st.session_state.username is None:
             if authenticate_user(username, password):
                 st.session_state.username = username
                 st.success("Logged in successfully!")
-                # Remove the rerun call
-                # st.experimental_rerun()  # Refresh the app to show the logging interface
+                # No need for st.experimental_rerun() here
             else:
                 st.error("Invalid username or password.")
 else:
@@ -159,8 +158,7 @@ else:
     if st.sidebar.button("Logout"):
         st.session_state.username = None
         st.success("Logged out successfully!")
-        # Remove the rerun call
-        # st.experimental_rerun()  # Refresh the app to show the login interface
+        # No need for st.experimental_rerun() here
 
     # Sidebar for inputs
     date = st.sidebar.date_input("Select Date", datetime.today())
