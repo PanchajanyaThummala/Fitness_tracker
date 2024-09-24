@@ -137,7 +137,7 @@ if st.sidebar.button("Clear All Entries"):
 st.subheader("📊 Logged Exercises")
 data = load_data()
 if not data.empty:
-    st.dataframe(data.style.hide_index(), use_container_width=True)  # Hide index for cleaner look
+    st.dataframe(data, use_container_width=True)  # Display the DataFrame without index
 else:
     st.write("No entries found. Please log your exercises.")
 
