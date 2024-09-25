@@ -104,8 +104,8 @@ def clear_data(username):
 create_tables()
 
 # Streamlit app layout
-st.set_page_config(page_title="Exercise Log", layout="wide")
-st.title("🏋️ Exercise Log")
+st.set_page_config(page_title="FITRACK", layout="wide")
+st.title("🏋️ FIT TRACK")
 
 # User authentication
 if 'username' not in st.session_state:
